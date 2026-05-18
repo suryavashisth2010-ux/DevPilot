@@ -93,7 +93,12 @@ export default function Dashboard() {
   // File explorer selection state
   const [selectedFile, setSelectedFile] = useState("docs/PRD.md");
 
-  const { messages, status, sendMessage, clearMessages } = useWebSocket("ws://localhost:8001/ws");
+  // Auto-resolve live websocket connection for production build context
+  const wsUrl = typeof window !== "undefined" && window.location.hostname !== "localhost"
+    ? "wss://devpilot-g6x4.onrender.com/ws"
+    : (process.env.NEXT_PUBLIC_WS_URL || "ws://localhost:8001/ws");
+
+  const { messages, status, sendMessage, clearMessages } = useWebSocket(wsUrl);
 
   useEffect(() => {
     if (messages.length > 0) {
