@@ -1,0 +1,33 @@
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      - MODEL_API_BASE=${MODEL_API_BASE:-http://vllm-server:8000/v1}
+      - MODEL_API_KEY=${MODEL_API_KEY:-EMPTY}
+      - MODEL_NAME=${MODEL_NAME:-qwen-2.5-7b-instruct}
+    depends_on:
+      - vllm-server
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+
+  # This is a placeholder for a vLLM server with ROCm
+  vllm-server:
+    image: vllm/vllm-openai:latest
+    device_requests:
+      - driver: cdap
+        count: all
+        capabilities: [gpu]
+    environment:
+      - MODEL_NAME=Qwen/Qwen2.5-7B-Instruct
+    command: --model Qwen/Qwen2.5-7B-Instruct --device rocm
+    ports:
+      - "8001:8000"
+    profiles:
+      - local-gpu
