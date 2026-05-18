@@ -295,10 +295,10 @@ export default function Dashboard() {
         </div>
       </header>
 
-      <main className="flex-1 flex flex-col lg:flex-row overflow-y-auto lg:overflow-hidden bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/10 via-black to-black relative">
+      <main className="flex-1 flex flex-col lg:flex-row lg:overflow-hidden bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/10 via-black to-black relative">
         
         {/* Sidebar - Agents Swarm */}
-        <aside className={`${showAgentSwarm ? "flex" : "hidden"} lg:flex lg:w-72 w-full lg:border-r border-b lg:border-b-0 border-white/5 bg-black/20 p-6 flex-col gap-8 backdrop-blur-xl shrink-0`}>
+        <aside className={`${showAgentSwarm ? "flex" : "hidden"} lg:flex lg:relative absolute top-0 left-0 h-full lg:h-auto z-40 lg:w-72 w-64 lg:border-r border-r border-white/5 bg-zinc-950/98 lg:bg-black/20 p-6 flex-col gap-8 backdrop-blur-xl shrink-0 transition-all duration-300 shadow-2xl lg:shadow-none`}>
           <div className="space-y-4">
             <div className="flex items-center justify-between px-2">
               <h2 className="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em]">Agent Swarm</h2>
@@ -396,7 +396,7 @@ export default function Dashboard() {
                   className="h-full flex flex-col bg-black/50"
                 >
                   {/* Live System Metrics */}
-                  <div className="grid grid-cols-5 gap-4 px-8 py-5 border-b border-white/5 bg-zinc-950/80 backdrop-blur-xl shrink-0">
+                  <div className="grid grid-cols-2 md:grid-cols-5 gap-3 lg:gap-4 px-4 lg:px-8 py-3 lg:py-5 border-b border-white/5 bg-zinc-950/80 backdrop-blur-xl shrink-0">
                     <MetricCard label="Active Agents" value={activeAgent ? '1' : '0'} />
                     <MetricCard label="Tasks Completed" value={`${completedAgents.length}/8`} />
                     <MetricCard label="Artifacts" value={Object.keys(projectState).filter(k => projectState[k]).length.toString()} />
@@ -405,30 +405,32 @@ export default function Dashboard() {
                   </div>
 
                   <Tabs value={activeTab} onValueChange={setActiveTab} className="flex-1 flex flex-col overflow-hidden">
-                    <div className="flex items-center justify-between px-8 py-4 border-b border-white/5 bg-black/40 backdrop-blur-md shrink-0">
-                      <TabsList className="bg-white/5 border border-white/10 p-1 rounded-xl h-10">
-                        <TabsTrigger value="graph" className="rounded-lg px-3 text-[10px] font-bold uppercase tracking-wider transition-all">Workflow</TabsTrigger>
-                        <TabsTrigger value="spec" className="rounded-lg px-3 text-[10px] font-bold uppercase tracking-wider transition-all relative">
-                          Specification
-                          {projectState.prd && <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-blue-500 rounded-full animate-ping" />}
-                        </TabsTrigger>
-                        <TabsTrigger value="architecture" className="rounded-lg px-3 text-[10px] font-bold uppercase tracking-wider transition-all relative">
-                          Architecture
-                          {projectState.architecture && <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-blue-500 rounded-full animate-ping" />}
-                        </TabsTrigger>
-                        <TabsTrigger value="database" className="rounded-lg px-3 text-[10px] font-bold uppercase tracking-wider transition-all relative">
-                          Database Schema
-                          {projectState.database_schema && <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-blue-500 rounded-full animate-ping" />}
-                        </TabsTrigger>
-                        <TabsTrigger value="scaffold" className="rounded-lg px-3 text-[10px] font-bold uppercase tracking-wider transition-all relative">
-                          Workspace IDE
-                          {projectState.backend_code && <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-blue-500 rounded-full animate-ping" />}
-                        </TabsTrigger>
-                        <TabsTrigger value="preview" disabled={completedAgents.length < 8} className="rounded-lg px-3 text-[10px] font-bold uppercase tracking-wider transition-all text-green-400 data-[state=active]:bg-green-500/10 data-[state=active]:text-green-400 disabled:opacity-30 relative">
-                          Live Preview
-                          {completedAgents.length === 8 && <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-green-500 rounded-full animate-ping" />}
-                        </TabsTrigger>
-                      </TabsList>
+                    <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 px-4 lg:px-8 py-3 lg:py-4 border-b border-white/5 bg-black/40 backdrop-blur-md shrink-0">
+                      <div className="overflow-x-auto max-w-full no-scrollbar shrink-0">
+                        <TabsList className="bg-white/5 border border-white/10 p-1 rounded-xl h-10 flex min-w-max">
+                          <TabsTrigger value="graph" className="rounded-lg px-3 text-[10px] font-bold uppercase tracking-wider transition-all">Workflow</TabsTrigger>
+                          <TabsTrigger value="spec" className="rounded-lg px-3 text-[10px] font-bold uppercase tracking-wider transition-all relative">
+                            Specification
+                            {projectState.prd && <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-blue-500 rounded-full animate-ping" />}
+                          </TabsTrigger>
+                          <TabsTrigger value="architecture" className="rounded-lg px-3 text-[10px] font-bold uppercase tracking-wider transition-all relative">
+                            Architecture
+                            {projectState.architecture && <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-blue-500 rounded-full animate-ping" />}
+                          </TabsTrigger>
+                          <TabsTrigger value="database" className="rounded-lg px-3 text-[10px] font-bold uppercase tracking-wider transition-all relative">
+                            Database Schema
+                            {projectState.database_schema && <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-blue-500 rounded-full animate-ping" />}
+                          </TabsTrigger>
+                          <TabsTrigger value="scaffold" className="rounded-lg px-3 text-[10px] font-bold uppercase tracking-wider transition-all relative">
+                            Workspace IDE
+                            {projectState.backend_code && <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-blue-500 rounded-full animate-ping" />}
+                          </TabsTrigger>
+                          <TabsTrigger value="preview" disabled={completedAgents.length < 8} className="rounded-lg px-3 text-[10px] font-bold uppercase tracking-wider transition-all text-green-400 data-[state=active]:bg-green-500/10 data-[state=active]:text-green-400 disabled:opacity-30 relative">
+                            Live Preview
+                            {completedAgents.length === 8 && <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-green-500 rounded-full animate-ping" />}
+                          </TabsTrigger>
+                        </TabsList>
+                      </div>
                       
                       <div className="flex gap-3">
                         <Button 
@@ -436,7 +438,7 @@ export default function Dashboard() {
                           size="sm" 
                           onClick={handleExport}
                           disabled={completedAgents.length < 8}
-                          className="border-white/10 bg-white/5 text-zinc-300 gap-2 hover:bg-white/10 rounded-xl px-4 font-bold text-xs uppercase tracking-tight"
+                          className="border-white/10 bg-white/5 text-zinc-300 gap-2 hover:bg-white/10 rounded-xl px-4 font-bold text-xs uppercase tracking-tight w-full lg:w-auto justify-center"
                         >
                           <Download className="w-3.5 h-3.5" />
                           Download Repo
