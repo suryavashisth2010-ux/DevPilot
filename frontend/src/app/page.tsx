@@ -81,6 +81,7 @@ export default function Dashboard() {
   const [completedAgents, setCompletedAgents] = useState<string[]>([]);
   const [projectState, setProjectState] = useState<any>({});
   const [activeTab, setActiveTab] = useState("graph");
+  const [showAgentSwarm, setShowAgentSwarm] = useState(false);
 
   // LLM settings control panel state
   const [showSettings, setShowSettings] = useState(false);
@@ -283,16 +284,21 @@ export default function Dashboard() {
           <Button variant="ghost" size="icon" className="text-zinc-400 hover:text-white hover:bg-white/5 rounded-xl">
             <Share2 className="w-4 h-4" />
           </Button>
-          <Button variant="ghost" size="icon" className="text-zinc-400 hover:text-white hover:bg-white/5 rounded-xl">
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            onClick={() => setShowAgentSwarm(!showAgentSwarm)}
+            className={`text-zinc-400 hover:text-white hover:bg-white/5 rounded-xl lg:hidden ${showAgentSwarm ? 'bg-white/10 text-white' : ''}`}
+          >
             <Menu className="w-4 h-4" />
           </Button>
         </div>
       </header>
 
-      <main className="flex-1 flex overflow-hidden bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/10 via-black to-black relative">
+      <main className="flex-1 flex flex-col lg:flex-row overflow-y-auto lg:overflow-hidden bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/10 via-black to-black relative">
         
         {/* Sidebar - Agents Swarm */}
-        <aside className="w-72 border-r border-white/5 bg-black/20 p-6 flex flex-col gap-8 backdrop-blur-xl shrink-0">
+        <aside className={`${showAgentSwarm ? "flex" : "hidden"} lg:flex lg:w-72 w-full lg:border-r border-b lg:border-b-0 border-white/5 bg-black/20 p-6 flex-col gap-8 backdrop-blur-xl shrink-0`}>
           <div className="space-y-4">
             <div className="flex items-center justify-between px-2">
               <h2 className="text-[10px] font-bold text-zinc-500 uppercase tracking-[0.2em]">Agent Swarm</h2>

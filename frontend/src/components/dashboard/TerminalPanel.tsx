@@ -148,7 +148,7 @@ export function TerminalPanel({ logs }: TerminalPanelProps) {
   }, [logs]);
 
   return (
-    <aside className="w-96 border-l border-white/5 bg-black/60 flex flex-col backdrop-blur-3xl z-10 shadow-[-30px_0_60px_rgba(0,0,0,0.4)]">
+    <aside className="lg:w-96 w-full lg:border-l border-t lg:border-t-0 border-white/5 bg-black/60 flex flex-col backdrop-blur-3xl z-10 shadow-[-30px_0_60px_rgba(0,0,0,0.4)] h-72 lg:h-auto shrink-0">
       
       {/* Header */}
       <div className="p-5 border-b border-white/5 flex items-center justify-between bg-black/40">
