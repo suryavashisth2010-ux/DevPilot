@@ -328,8 +328,8 @@ export default function Dashboard() {
         </aside>
 
         {/* Central Orchestration Canvas */}
-        <section className="flex-1 flex flex-col overflow-hidden">
-          <div className="flex-1 relative overflow-hidden">
+        <section className="flex-1 flex flex-col lg:overflow-hidden overflow-y-auto">
+          <div className="flex-1 relative lg:overflow-hidden overflow-y-auto min-h-0 flex flex-col">
             <AnimatePresence mode="wait">
               {!isProcessing && completedAgents.length === 0 ? (
                 <motion.div 
@@ -337,7 +337,7 @@ export default function Dashboard() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95, filter: "blur(20px)" }}
-                  className="h-full flex flex-col items-center justify-center max-w-2xl mx-auto text-center p-6"
+                  className="min-h-[80vh] lg:h-full flex flex-col items-center justify-center max-w-2xl mx-auto text-center p-6 py-12 lg:py-6"
                 >
                   <div className="relative mb-8 group">
                     <div className="absolute -inset-4 bg-blue-500/20 rounded-full blur-3xl group-hover:bg-blue-500/30 transition duration-1000 animate-pulse" />
